@@ -31,15 +31,24 @@ app.post('/', upload.single('thumb'), function(req, res, next) {
 	msg.title = emojis[ payload.event ] + " " + payload.Account.title;
 
 	// Movies
-	if(payload.Metadata.librarySectionID === 1) {
+	if(payload.Metadata.librarySectionType === 'movie') {
 		msg.message = payload.Metadata.title;
 	}
 
 	// TV Shows
-	else if(payload.Metadata.librarySectionID === 2) {
+	else if(payload.Metadata.librarySectionType === 'show') {
 		msg.message = payload.Metadata.grandparentTitle + 
 						" S" + (payload.Metadata.parentIndex < 10 ? "0" : "") + payload.Metadata.parentIndex + 
 						"E" + payload.Metadata.index;
+	}
+
+	// Trailer
+	else if(payload.Metadata.cinemaTrailer) {
+		msg.message = 'Trailer: ' + payload.Metadata.title;
+	}
+
+	else {
+		return;
 	}
 
 	msg.url = "https://app.plex.tv/web/app#!/server/" + 
