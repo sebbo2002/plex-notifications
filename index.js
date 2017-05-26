@@ -23,8 +23,9 @@ app.post('/', upload.single('thumb'), function(req, res, next) {
 	let payload = JSON.parse(req.body.payload),
 		msg = {};
 
+	res.send(201)
 	if(!emojis[ payload.event ]) {
-		return res.send(201);
+		return;
 	}
 
 
