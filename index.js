@@ -18,6 +18,9 @@ const express = require('express'),
 	  	"media.stop": "⏹"
 	  };
 
+app.get('/ping', function(req, res) {
+	res.send('pong');
+});
 
 app.post('/', upload.single('thumb'), function(req, res, next) {
 	let payload = JSON.parse(req.body.payload),
