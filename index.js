@@ -18,6 +18,13 @@ const express = require('express'),
 	  	"media.stop": "⏹"
 	  };
 
+if (!process.env['PUSHOVER_USER']) {
+	throw new Error('Unable to start: PUSHOVER_USER empty');
+}
+if (!process.env['PUSHOVER_TOKEN']) {
+	throw new Error('Unable to start: PUSHOVER_TOKEN empty');
+}
+
 app.get('/ping', function(req, res) {
 	res.send('pong');
 });

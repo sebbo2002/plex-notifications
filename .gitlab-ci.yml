@@ -1,5 +1,6 @@
 stages:
   - build
+  - deploy
 
 build_image:
   stage: build
@@ -8,7 +9,26 @@ build_image:
     - ssh
   script:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN docker.sebbo.net
-    - docker build -t docker.sebbo.net/sebbo2002/docker-plex-notifications .
-    - docker push docker.sebbo.net/sebbo2002/docker-plex-notifications
+    - docker build -t docker.sebbo.net/sebbo2002/plex-notifications .
+    - docker push docker.sebbo.net/sebbo2002/plex-notifications
+  only:
+    - master
+
+publish_github:
+  stage: build
+  tags:
+    - matt.sebbo.net
+    - ssh
+  script:
+    - git push "https://${GITHUB_AUTH}@github.com/sebbo2002/plex-notifications.git" --all
+    - git push "https://${GITHUB_AUTH}@github.com/sebbo2002/plex-notifications.git" --tags
+
+trigger_dockerhub:
+  stage: deploy
+  tags:
+    - matt.sebbo.net
+    - ssh
+  script:
+    - curl -X "POST" "https://registry.hub.docker.com/u/sebbo2002/plex-notifications/trigger/59ff1b8a-54f6-4e23-9847-c79ad25ba7f3/"
   only:
     - master
