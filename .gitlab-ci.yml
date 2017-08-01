@@ -23,6 +23,25 @@ publish_github:
     - git push "https://${GITHUB_AUTH}@github.com/sebbo2002/plex-notifications.git" --all
     - git push "https://${GITHUB_AUTH}@github.com/sebbo2002/plex-notifications.git" --tags
 
+deployment:
+  stage: deploy
+  tags:
+    - matt.sebbo.net
+    - ssh
+  script:
+    - docker login -u "gitlab-ci-token" -p "${CI_BUILD_TOKEN}" docker.sebbo.net
+    - docker pull docker.sebbo.net/sebbo2002/plex-notifications
+    - docker stop "plex-notifications" || true
+    - docker rm "plex-notifications" || true
+    - docker create --restart "always" --name="plex-notifications"
+        -p 127.0.0.1:10032:8888 \
+        -e PUSHOVER_USER="uRCHQprMWSkGXveyt6CYXSm2GZYzsK" \
+        -e PUSHOVER_TOKEN="aade8rrbtodjtx2umg4dit4ptqaune" \
+        docker.sebbo.net/sebbo2002/plex-notifications
+    - docker start plex-notifications
+  only:
+    - master
+
 trigger_dockerhub:
   stage: deploy
   tags:
