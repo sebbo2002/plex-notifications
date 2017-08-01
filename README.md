@@ -14,7 +14,8 @@ You'll need [node.js](https://nodejs.org/en/) to run this.
 git clone https://github.com/sebbo2002/plex-notifications.git
 cd ./plex-notifications
 npm install
-npm start
+
+PUSHOVER_TOKEN=*** PUSHOVER_USER=*** npm start
 ```
 
 
@@ -23,7 +24,7 @@ npm start
 You can also use the docker container to run this script:
 
 ```bash
-docker run sebbo2002/plex-notifications
+docker run -p 8888 -e 'PUSHOVER_TOKEN=***' -e 'PUSHOVER_USER=***' sebbo2002/plex-notifications
 ```
 
 
