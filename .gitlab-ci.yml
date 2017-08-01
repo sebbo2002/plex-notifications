@@ -34,9 +34,9 @@ deployment:
     - docker stop "plex-notifications" || true
     - docker rm "plex-notifications" || true
     - docker create --restart "always" --name="plex-notifications"
-        -p 127.0.0.1:10032:8888 \
-        -e PUSHOVER_USER="${PUSHOVER_USER}" \
-        -e PUSHOVER_TOKEN="${PUSHOVER_TOKEN}" \
+        -p 127.0.0.1:10032:8888
+        -e PUSHOVER_USER="${PUSHOVER_USER}"
+        -e PUSHOVER_TOKEN="${PUSHOVER_TOKEN}"
         docker.sebbo.net/sebbo2002/plex-notifications
     - docker start plex-notifications
   only:
