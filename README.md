@@ -1,5 +1,6 @@
 # plex-notifications
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
+[![Status](https://git-badges.sebbo.net/52/master/build)](https://git.sebbo.net/sebbo2002/plex-notifications/pipelines)
 
 Tiny script which sends pushover notifications for plex server events.
 
