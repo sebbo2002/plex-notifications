@@ -69,7 +69,9 @@ app.post('/', upload.single('thumb'), function(req, res, next) {
 
 	p.send( msg, function(err, result) {
 		if( err ) {
+			console.log('Pushover Error:', err);
 			res.status(500).send(err);
+			return;
 		}
 
 		res.sendStatus(201);
