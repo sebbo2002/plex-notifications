@@ -5,7 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./index.js"
+    "start": "node ./index.js",
+    "check": "npm run check:eslint && npm run check:npm && npm run check:nsp",
+    "check:quick": "npm run check:eslint && npm run check:nsp",
+    "check:eslint": "eslint ./",
+    "check:nsp": "nsp check",
+    "check:npm": "npm-check -s -p",
+    "bump": "jq -M \".version=\\\"$CI_COMMIT_TAG\\\"\" package.json|sponge package.json"
   },
   "repository": {
     "type": "git",
@@ -14,9 +20,14 @@
   "author": "Sebastian Pekarek <mail@sebbo.net>",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.16.3",
-    "multer": "^1.3.0",
-    "pushover-notifications": "^1.0.0",
-    "request": "^2.87.0"
+    "express": "^4.16.4",
+    "multer": "^1.4.1",
+    "pushover-notifications": "^1.2.0",
+    "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.9.0",
+    "npm-check": "^5.9.0",
+    "nsp": "^3.2.1"
   }
 }
