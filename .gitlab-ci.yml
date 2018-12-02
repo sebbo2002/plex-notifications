@@ -14,6 +14,18 @@ build_image:
   only:
     - master
 
+check:
+  stage: build
+  tags:
+    - matt.sebbo.net
+    - ssh
+  script:
+    - npm install
+    - npm run check
+  only:
+    - master
+    - develop
+
 publish_github:
   stage: build
   tags:
