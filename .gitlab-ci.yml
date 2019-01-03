@@ -49,19 +49,6 @@ publish_github_tags:
     - git pull
     - git push --force "https://${GITHUB_AUTH}@github.com/sebbo2002/plex-notifications.git" --tags
 
-publish_npm:
-  stage: deploy
-  tags:
-    - matt.sebbo.net
-    - ssh
-  script:
-    - npm config set //registry.npmjs.org/:_authToken $NPM_TOKEN
-    - npm install
-    - npm run bump
-    - npm publish
-  only:
-    - tags
-
 deployment:
   stage: deploy
   tags:
