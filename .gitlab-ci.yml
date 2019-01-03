@@ -35,7 +35,7 @@ publish_github:
   script:
     - git checkout $CI_COMMIT_REF_NAME
     - git pull
-    - git push --force "https://${GITHUB_AUTH}@github.com/dwimm/plugin-bunq.git" --all
+    - git push --force "https://${GITHUB_AUTH}@github.com/sebbo2002/plex-notifications.git" --all
   except:
     - tags
 
@@ -47,7 +47,7 @@ publish_github_tags:
   script:
     - git checkout $CI_COMMIT_REF_NAME
     - git pull
-    - git push --force "https://${GITHUB_AUTH}@github.com/dwimm/plugin-bunq.git" --tags
+    - git push --force "https://${GITHUB_AUTH}@github.com/sebbo2002/plex-notifications.git" --tags
 
 publish_npm:
   stage: deploy
