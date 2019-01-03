@@ -9,10 +9,12 @@ build_image:
     - ssh
   script:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN docker.sebbo.net
-    - docker build -t docker.sebbo.net/sebbo2002/plex-notifications .
+    - docker build -t docker.sebbo.net/sebbo2002/plex-notifications:$CI_COMMIT_REF_NAME .
+    - docker push docker.sebbo.net/sebbo2002/plex-notifications:$CI_COMMIT_REF_NAME
+    - docker tag docker.sebbo.net/sebbo2002/plex-notifications:$CI_COMMIT_REF_NAME docker.sebbo.net/sebbo2002/plex-notifications
     - docker push docker.sebbo.net/sebbo2002/plex-notifications
   only:
-    - master
+    - tags
 
 check:
   stage: build
@@ -22,9 +24,8 @@ check:
   script:
     - npm install
     - npm run check
-  only:
-    - master
-    - develop
+  except:
+    - tags
 
 publish_github:
   stage: build
@@ -35,7 +36,31 @@ publish_github:
     - git checkout $CI_COMMIT_REF_NAME
     - git pull
     - git push --force "https://${GITHUB_AUTH}@github.com/dwimm/plugin-bunq.git" --all
+  except:
+    - tags
+
+publish_github_tags:
+  stage: build
+  tags:
+    - matt.sebbo.net
+    - ssh
+  script:
+    - git checkout $CI_COMMIT_REF_NAME
+    - git pull
     - git push --force "https://${GITHUB_AUTH}@github.com/dwimm/plugin-bunq.git" --tags
+
+publish_npm:
+  stage: deploy
+  tags:
+    - matt.sebbo.net
+    - ssh
+  script:
+    - npm config set //registry.npmjs.org/:_authToken $NPM_TOKEN
+    - npm install
+    - npm run bump
+    - npm publish
+  only:
+    - tags
 
 deployment:
   stage: deploy
@@ -64,4 +89,4 @@ trigger_dockerhub:
   script:
     - curl -X "POST" "https://registry.hub.docker.com/u/sebbo2002/plex-notifications/trigger/59ff1b8a-54f6-4e23-9847-c79ad25ba7f3/"
   only:
-    - master
+    - tags
