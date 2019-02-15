@@ -6,10 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./index.js",
-    "check": "npm run check:eslint && npm run check:npm && npm run check:nsp",
-    "check:quick": "npm run check:eslint && npm run check:nsp",
+    "check": "npm run check:eslint && npm run check:npm",
+    "check:quick": "npm run check:eslint",
     "check:eslint": "eslint ./",
-    "check:nsp": "npm_config_audit_level=moderate npm audit",
     "check:npm": "npm-check -s -p",
     "bump": "jq -M \".version=\\\"$CI_COMMIT_TAG\\\"\" package.json|sponge package.json"
   },
@@ -26,7 +25,7 @@
     "request": "^2.88.0"
   },
   "devDependencies": {
-    "eslint": "^5.9.0",
+    "eslint": "^5.13.0",
     "npm-check": "^5.9.0",
     "nsp": "^3.2.1"
   }
