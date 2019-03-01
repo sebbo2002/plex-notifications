@@ -8,6 +8,7 @@ build_image:
     - matt.sebbo.net
     - ssh
   script:
+    - docker pull node:alpine
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN docker.sebbo.net
     - docker build -t docker.sebbo.net/sebbo2002/plex-notifications:$CI_COMMIT_REF_NAME .
     - docker push docker.sebbo.net/sebbo2002/plex-notifications:$CI_COMMIT_REF_NAME
