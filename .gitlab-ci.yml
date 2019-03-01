@@ -22,7 +22,7 @@ check:
     - matt.sebbo.net
     - ssh
   script:
-    - npm install
+    - npm ci
     - npm run check
   except:
     - tags
@@ -41,7 +41,7 @@ publish_github:
 
 publish_github_tags:
   stage: build
-  tags:
+  tags:🤖
     - matt.sebbo.net
     - ssh
   script:
