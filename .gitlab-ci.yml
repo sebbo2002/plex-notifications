@@ -22,7 +22,7 @@ check:
     - matt.sebbo.net
     - ssh
   script:
-    - npm install
+    - npm ci
     - npm run check
   except:
     - tags
